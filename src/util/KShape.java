@@ -1,5 +1,5 @@
-import util.Complex;
-import util.FFT;
+package util;
+
 import util.Jama.Matrix;
 import util.Jama.EigenvalueDecomposition;
 
@@ -27,12 +27,12 @@ public class KShape {
         return this.centroids;
     }
 
-    private double[] _ncc(double[] x1, double[] x2){
+    public static double[] _ncc(double[] x1, double[] x2){
         double den = _norm(x1) * _norm(x2);
         if (den < 1e-9)
             den = Double.MAX_VALUE;
         int x_len = x1.length;
-        int fft_size = 1 << Integer.bitCount(2*x_len-1);
+        int fft_size = (int) Math.pow(2, Integer.toBinaryString(2*x_len-1).length());
         double[] cc=  FFT.ifft(Complex.multiply(FFT.fft(x1, fft_size),
                 Complex.conjugate(FFT.fft(x2, fft_size))));
         double[] ncc = new double[fft_size - 1];
@@ -52,8 +52,8 @@ public class KShape {
         Random random = new Random();
         int[] idx = new int[n];
         int[] old_idx;
-        for (int i = 0; i < n; i++)
-            idx[i] = random.nextInt(k+1);
+//        for (int i = 0; i < n; i++)
+//            idx[i] = random.nextInt(k+1);
 
         double[][] _centroids = new double[k][l];
         double[][] distances = new double[n][k];
@@ -131,7 +131,7 @@ public class KShape {
         return _zscore(newCentroid);
     }
 
-    private double _norm(double[] x){
+    private static double _norm(double[] x){
         double res = 0.0;
         for (double v : x) {
             res += v * v;
@@ -213,10 +213,13 @@ public class KShape {
     }
 
     public static void main(String args[]){
-        Matrix X = new Matrix(new double[][]{{6, 4, 9}, {2, 8, 2}, {3, -4, 0}, {2, 6, 9}});
-        KShape kshape = new KShape(2, 100);
-        double[][] res = kshape.fit(X.getArray());
-        System.out.println(Arrays.deepToString(res));
+//        Matrix X = new Matrix(new double[][]{{6, 4, 9}, {2, 8, 2}, {3, -4, 0}, {2, 6, 9}});
+//        KShape kshape = new KShape(2, 100);
+//        double[][] res = kshape.fit(X.getArray());
+//        System.out.println(Arrays.deepToString(res));
+
+   _ncc(new double[]{1,2,3}, new double[]{1,2,3});
     }
+
 
 }
