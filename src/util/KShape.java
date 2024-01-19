@@ -89,7 +89,10 @@ public class KShape {
             return X[random.nextInt(X.length)];
         }
 
-        Matrix y = new Matrix(_zscore(X));
+        double[][] _matrix = new double[_a.size()][l];
+        for (int i = 0; i < _a.size(); i++)
+            _matrix[i] = _a.get(i);
+        Matrix y = new Matrix(_zscore(_matrix));
 
         Matrix s = y.transpose().times(y);
         double[][] _p = new double[l][l];
@@ -213,12 +216,11 @@ public class KShape {
     }
 
     public static void main(String args[]){
-//        Matrix X = new Matrix(new double[][]{{6, 4, 9}, {2, 8, 2}, {3, -4, 0}, {2, 6, 9}});
-//        KShape kshape = new KShape(2, 100);
-//        double[][] res = kshape.fit(X.getArray());
-//        System.out.println(Arrays.deepToString(res));
+        Matrix X = new Matrix(new double[][]{{6, 4, 9}, {2, 8, 2}, {3, -4, 0}, {2, 6, 9}});
+        KShape kshape = new KShape(2, 100);
+        double[][] res = kshape.fit(X.getArray());
+        System.out.println(Arrays.deepToString(res));
 
-   _ncc(new double[]{1,2,3}, new double[]{1,2,3});
     }
 
 
